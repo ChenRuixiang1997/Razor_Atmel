@@ -136,7 +136,53 @@ State Machine Function Definitions
 /* Wait for ??? */
 static void UserApp1SM_Idle(void)
 {
-
+  u8 u8string1[] = "\n\r****\n\r*";
+  u8 u8string2[] = "\n\r***\n\r*";
+  u8 u8string4[] = "\r****\n\r";
+  u8 u8string5[] = "\r***\n\r";
+  u8 u8string3[] = "*\n\r";
+  u8 u8name[] = "crx";
+  u8 u8judgement = 0;
+  static u8 u8save[3] = "";
+  static u32 u32name_appear_time = 0;
+  u8 u8input[3]="";
+  u8 u8counter  = 0;
+  u8counter = DebugScanf(u8input); 
+  if (u8counter>0)
+  {
+    u8save[0] = u8save[1];
+    u8save[1] = u8save[2];
+    u8save[2] = u8input[0];
+  for(u8counter=0;u8counter<=2;u8counter++)
+  {
+    if(u8save[u8counter]==u8name[u8counter])
+    {
+      u8judgement++;
+      
+    }
+    else
+    {
+     
+      u8judgement = 0;
+       break;
+    }
+  }       
+  }
+  if(u8judgement==3)
+  {
+    u8judgement=0;
+    u32name_appear_time++;
+    if(u32name_appear_time>9)
+      DebugPrintf(u8string1);
+    else
+      DebugPrintf(u8string2);
+    DebugPrintNumber(u32name_appear_time);
+    DebugPrintf(u8string3);
+    if(u32name_appear_time>9)
+      DebugPrintf(u8string4);
+    else
+      DebugPrintf(u8string5);    
+  }
 } /* end UserApp1SM_Idle() */
     
 #if 0
